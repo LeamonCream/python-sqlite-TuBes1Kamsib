@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 import sqlite3
+import bleach
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
@@ -25,7 +26,7 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add_student():
-    name = request.form['name']
+    name = bleach.clean(request.form['name'], tags=[], strip=True)
     age = request.form['age']
     grade = request.form['grade']
     
@@ -57,7 +58,7 @@ def delete_student(id):
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_student(id):
     if request.method == 'POST':
-        name = request.form['name']
+        name = bleach.clean(request.form['name'], tags=[], strip=True)
         age = request.form['age']
         grade = request.form['grade']
         
