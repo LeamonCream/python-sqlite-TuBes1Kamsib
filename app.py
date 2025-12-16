@@ -26,7 +26,9 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add_student():
-    name = bleach.clean(request.form['name'], tags=[], strip=True)
+
+    #name = request.form['name'] ---- Original Code
+    name = bleach.clean(request.form['name'],tags=[] ,strip=True)
     age = request.form['age']
     grade = request.form['grade']
     
@@ -58,6 +60,7 @@ def delete_student(id):
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_student(id):
     if request.method == 'POST':
+        # name = request.form['name'] --- Original code
         name = bleach.clean(request.form['name'], tags=[], strip=True)
         age = request.form['age']
         grade = request.form['grade']
