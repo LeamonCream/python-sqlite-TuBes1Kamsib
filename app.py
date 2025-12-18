@@ -127,6 +127,7 @@ def edit_student(id):
         grade = request.form['grade']
 
         # RAW Query (pakai parameter biar lebih aman)
+        # db.session.execute(text(f"UPDATE student SET name='{name}', age={age}, grade='{grade}' WHERE id={id}"))
         db.session.execute(
             text("UPDATE student SET name = :name, age = :age, grade = :grade WHERE id = :id"),
             {"name": name, "age": age, "grade": grade, "id": id}
@@ -143,3 +144,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(host='0.0.0.0', port=5000, debug=True)
+
